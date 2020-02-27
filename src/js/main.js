@@ -1,4 +1,9 @@
-window.mapboxgl.accessToken = 'pk.eyJ1IjoicmV1c3RsZSIsImEiOiJjazZtaHE4ZnkwMG9iM3BxYnFmaDgxbzQ0In0.nOiHGcSCRNa9MD9WxLIm7g'
+import Chart from "chart.js"
+import moment from "moment"
+import _ from "lodash"
+import MapBox from "mapbox.js"
+
+MapBox.accessToken = 'pk.eyJ1IjoicmV1c3RsZSIsImEiOiJjazZtaHE4ZnkwMG9iM3BxYnFmaDgxbzQ0In0.nOiHGcSCRNa9MD9WxLIm7g'
 const PREFECTURE_JSON_PATH = 'static/prefectures.geojson'
 const JSON_PATH = 'https://covid19japan.s3.ap-northeast-1.amazonaws.com/data.json'
 const TIME_FORMAT = 'YYYY-MM-DD'
@@ -59,7 +64,7 @@ function calculateTotals(prefectures) {
 function drawMap() {
   // Initialize Map
 
-  map = new mapboxgl.Map({
+  map = new MapBox.Map({
     container: 'map-container',
     style: 'mapbox://styles/mapbox/light-v10',
     zoom: 4,
