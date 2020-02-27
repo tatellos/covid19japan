@@ -1,0 +1,26 @@
+{
+  "name": "covid19japan",
+  "version": "1.0.0",
+  "description": "A COVID-19 Coronavirus tracker for Japan.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reustle/covid19japan.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reustle/covid19japan/issues"
+  },
+  "homepage": "https://covid19japan.com",
+  "scripts": {
+    "watch": "webpack --watch --mode='development'",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "whatwg-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  }
+}

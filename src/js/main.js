@@ -1,6 +1,4 @@
-'use strict';
-
-mapboxgl.accessToken = 'pk.eyJ1IjoicmV1c3RsZSIsImEiOiJjazZtaHE4ZnkwMG9iM3BxYnFmaDgxbzQ0In0.nOiHGcSCRNa9MD9WxLIm7g'
+window.mapboxgl.accessToken = 'pk.eyJ1IjoicmV1c3RsZSIsImEiOiJjazZtaHE4ZnkwMG9iM3BxYnFmaDgxbzQ0In0.nOiHGcSCRNa9MD9WxLIm7g'
 const PREFECTURE_JSON_PATH = 'static/prefectures.geojson'
 const JSON_PATH = 'https://covid19japan.s3.ap-northeast-1.amazonaws.com/data.json'
 const TIME_FORMAT = 'YYYY-MM-DD'
@@ -385,5 +383,44 @@ function initDataTranslate() {
       document.querySelector('a[data-lang-picker='+LANG+']').style.display = 'none'
       
     })
+  })
+}
+
+let styleLoaded = false;
+let jsonData;
+
+function whenMapAndDataReady() {
+  if (!styleLoaded || !jsonData) {
+    return;
+  }
+
+  drawMapPrefectures(ddb.prefectures);
+}
+
+
+export function init() {
+  initDataTranslate();
+  drawMap();
+
+  map.once('style.load', function (e) {
+    styleLoaded = true;
+    whenMapAndDataReady();
+  });
+
+  loadData(function (data) {
+    jsonData = data;
+
+    ddb.prefectures = data.prefectures;
+    ddb.totals = calculateTotals(data.prefectures);
+    ddb.trend = data.daily;
+    ddb.lastUpdated = data.updated[0].lastupdated;
+
+    drawLastUpdated(ddb.lastUpdated);
+    drawKpis(ddb.totals);
+    drawPageTitleCount(ddb.totals.confirmed);
+    drawPrefectureTable(ddb.prefectures, ddb.totals);
+    drawTrendChart(ddb.trend);
+
+    whenMapAndDataReady();
   })
 }

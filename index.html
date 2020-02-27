@@ -7,7 +7,7 @@ layout: base
     <a href="#" data-lang-picker='ja'>🇯🇵 日本語</a>
     <a href="#" data-lang-picker='en' style="display:none">🇺🇸 English</a>
   </div>
-  
+
   <h1 data-ja="日本国内の新型コロナウイルス (COVID-19) 感染状況追跡">Coronavirus Disease (COVID-19) Japan Tracker</h1>
   <em><small><span data-ja="最終更新:">Last Updated:</span> <strong id="last-updated">-</strong></small></em>
 </header>
@@ -114,48 +114,4 @@ layout: base
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/drive-db@5.0.3/index.min.js"></script>
-<script src="static/main.js"></script>
-<script>
-  (function(){
-    if(typeof drawMap === 'undefined'){
-      return
-    }
-    
-    initDataTranslate()
-    drawMap()
-    
-    var styleLoaded = false
-    var jsonData = undefined
-    
-    function whenMapAndDataReady(){
-      if(!styleLoaded || !jsonData){
-        return
-      }
-      
-      drawMapPrefectures(ddb.prefectures)
-    }
-    
-    map.once('style.load', function(e) {
-      styleLoaded = true
-      whenMapAndDataReady()
-    })
-    
-    loadData(function(data){
-      jsonData = data
-      
-      ddb.prefectures = jsonData.prefectures
-      ddb.totals = calculateTotals(jsonData.prefectures)
-      ddb.trend = jsonData.daily
-      ddb.lastUpdated = jsonData.updated[0].lastupdated
-      
-      drawLastUpdated(ddb.lastUpdated)
-      drawKpis(ddb.totals)
-      drawPageTitleCount(ddb.totals.confirmed)
-      drawPrefectureTable(ddb.prefectures, ddb.totals)
-      drawTrendChart(ddb.trend)
-      
-      whenMapAndDataReady()
-    })
-
-  })()
-</script>
+<script src="static/main.min.js"></script>
