@@ -41,48 +41,7 @@ layout: base
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/drive-db@5.0.3/index.min.js"></script>
-<script src="static/main.js"></script>
-<script>
-  (function(){
-    document.body.classList.add('embed-mode')
-    
-    if(typeof drawMap === 'undefined'){
-      return
-    }
-    
-    drawMap()
-    
-    var styleLoaded = false
-    var jsonData = undefined
-    
-    function whenMapAndDataReady(){
-      if(!styleLoaded || !jsonData){
-        return
-      }
-      
-      drawMapPrefectures(ddb.prefectures)
-    }
-    
-    map.once('style.load', function(e) {
-      styleLoaded = true
-      whenMapAndDataReady()
-    })
-    
-    loadData(function(data){
-      jsonData = data
-      
-      ddb.prefectures = jsonData.prefectures
-      ddb.totals = calculateTotals(jsonData.prefectures)
-      ddb.trend = jsonData.daily
-      ddb.lastUpdated = jsonData.updated[0].lastupdated
-      
-      drawKpis(ddb.totals)
-      
-      whenMapAndDataReady()
-    })
-
-  })()
-</script>
+<script src="static/embed.min.js"></script>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-2580539-41"></script>
 <script>

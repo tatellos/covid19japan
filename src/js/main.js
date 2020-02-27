@@ -397,9 +397,7 @@ function whenMapAndDataReady() {
   drawMapPrefectures(ddb.prefectures);
 }
 
-
-export function init() {
-  initDataTranslate();
+function drawMapAndLoadData(displayData) {
   drawMap();
 
   map.once('style.load', function (e) {
@@ -415,12 +413,27 @@ export function init() {
     ddb.trend = data.daily;
     ddb.lastUpdated = data.updated[0].lastupdated;
 
+    displayData(ddb);
+
+    whenMapAndDataReady();
+  })
+}
+
+export function initIndex() {
+  initDataTranslate();
+  drawMapAndLoadData(function (ddb) {
     drawLastUpdated(ddb.lastUpdated);
     drawKpis(ddb.totals);
     drawPageTitleCount(ddb.totals.confirmed);
     drawPrefectureTable(ddb.prefectures, ddb.totals);
     drawTrendChart(ddb.trend);
+  });
+}
 
-    whenMapAndDataReady();
-  })
+export function initEmbed() {
+  document.body.classList.add('embed-mode')
+
+  drawMapAndLoadData(function (ddb) {
+    drawKpis(ddb.totals)
+  });
 }

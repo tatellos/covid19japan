@@ -1,4 +1,4 @@
 import "whatwg-fetch";
-import { init } from "./main";
+import { initIndex } from "./main";
 
-init();
+initIndex();
